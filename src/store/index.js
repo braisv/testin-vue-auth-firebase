@@ -48,8 +48,7 @@ export default new Vuex.Store({
         });
     },
     loggedInUser({ commit }, payload) {
-      console.log(payload)
-      commit('setUser', { email: payload.email, uid: payload.uid })
+      payload ? commit('setUser', { email: payload.email, uid: payload.uid }) : commit('setUser', null)
     },
     logout({ commit }) {
       firebase.auth().signOut()
