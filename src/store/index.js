@@ -56,5 +56,9 @@ export default new Vuex.Store({
       router.push("/login");
     }
   },
-  modules: {}
+  getters: {
+    loggedUser(state) {
+      return state.user === null || state.user === '' || state.user === undefined ? false : true
+    }
+  }
 });
