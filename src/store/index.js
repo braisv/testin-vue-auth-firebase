@@ -46,6 +46,15 @@ export default new Vuex.Store({
         .catch(err => {
           commit("setError", err.message)
         });
+    },
+    loggedInUser({ commit }, payload) {
+      console.log(payload)
+      commit('setUser', { email: payload.email, uid: payload.uid })
+    },
+    logout({ commit }) {
+      firebase.auth().signOut()
+      commit('setUser', null)
+      router.push("/login");
     }
   },
   modules: {}

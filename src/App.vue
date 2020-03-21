@@ -3,11 +3,22 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/signup">Sign up</router-link> |
-            <router-link to="/login">Log in</router-link>
+      <router-link to="/login">Log in</router-link> |
+      <a @click="logout">Log Out</a>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
+
+<script>
+import { mapActions } from 'vuex'
+export default {
+  name: 'App',
+  methods: {
+    ...mapActions(['logout'])
+  }
+}
+</script>
 
 <style>
 #app {
