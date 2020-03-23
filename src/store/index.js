@@ -1,14 +1,18 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "../router";
+import db from "../main";
 const firebase = require("firebase/app");
+
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     user: "",
-    error: ""
+    error: "",
+    tasks: [],
+    task: { name: '', id: '' }
   },
   mutations: {
     setUser(state, payload) {
@@ -16,6 +20,15 @@ export default new Vuex.Store({
     },
     setError(state, payload) {
       state.error = payload;
+    },
+    setTasks(state, tasks) {
+      state.tasks = tasks
+    },
+    setTask(state, task) {
+      state.task = task
+    },
+    deleteTask(state, id) {
+      state.tasks = state.tasks.filter(task => task.id != id)
     }
   },
   actions: {
@@ -29,7 +42,13 @@ export default new Vuex.Store({
             password: res.user.password,
             uid: res.user.uid
           });
-          router.push("/");
+          
+          db.collection(res.user.email).add({
+            name: 'Example task'
+          })
+          .then( () => {
+            router.push("/");
+          })
         })
         .catch(err => {
           commit("setError", err.message);
@@ -54,6 +73,51 @@ export default new Vuex.Store({
       firebase.auth().signOut()
       commit('setUser', null)
       router.push("/login");
+    },
+    getTasks({ commit }) {
+      const user = firebase.auth().currentUser
+      const dbTasks = []
+      db.collection(user.email).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          let task = doc.data()
+          task.id = doc.id
+          dbTasks.push(task)
+        })
+      })
+      commit('setTasks', dbTasks)
+    },
+    getTask({ commit }, id) {
+      const user = firebase.auth().currentUser
+      db.collection(user.email).doc(id).get()
+      .then(doc => {
+        let task = doc.data();
+        task.id = doc.id;
+        commit('setTask', task)
+      })
+    },
+    editTask({ commit}, task) {
+      const user = firebase.auth().currentUser
+      db.collection(user.email).doc(task.id).update({
+        name: task.name
+      })
+      .then( () => {
+        router.push({ name: 'Home' })
+      })
+    },
+    addTask({ commit }, taskName) {
+      const user = firebase.auth().currentUser
+      db.collection(user.email).add({
+        name: taskName
+      })
+      .then( () => {
+        router.push({ name: 'Home' })
+      })
+    },
+    deleteTask({ commit }, id) {
+      const user = firebase.auth().currentUser
+      db.collection(user.email).doc(id).delete()
+      .then( () => commit('deleteTask', id))
     }
   },
   getters: {

@@ -20,6 +20,18 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "Login" */ '../views/Login.vue')
+  },
+  {
+    path: '/edit/:id',
+    name: 'Edit',
+    component: () => import(/* webpackChunkName: "Edit" */ '../views/Edit.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/add',
+    name: 'Add',
+    component: () => import(/* webpackChunkName: "Add" */ '../views/Add.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 
