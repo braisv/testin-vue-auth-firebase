@@ -1,11 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" class="container mt-5">
     <div id="nav">
-      <router-link to="/" v-if="loggedUser">Home</router-link> |
-      <router-link to="/signup" v-if="!loggedUser">Sign up</router-link> |
-      <router-link to="/login" v-if="!loggedUser">Log in</router-link> |
-      <a @click="logout" v-if="loggedUser">Log Out</a>
-      {{loggedUser}}
+      <router-link to="/" v-if="loggedUser" class="btn btn-primary">Home</router-link> |
+      <router-link to="/signup" v-if="!loggedUser" class="btn btn-primary">Sign up</router-link> |
+      <router-link to="/login" v-if="!loggedUser" class="btn btn-primary">Log in</router-link> |
+      <a @click="logout" v-if="loggedUser" class="btn btn-danger">Log Out</a>
     </div>
     <router-view />
   </div>
@@ -26,7 +25,7 @@ export default {
 </script>
 
 <style>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -45,5 +44,5 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>
