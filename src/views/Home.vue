@@ -4,7 +4,12 @@
     <router-link :to="{ name: 'Add' }">
       <button class="btn btn-success btn-block mt-2 mb-2">Add</button>
     </router-link>
+
     <ul class="list-group">
+      <div v-if="loading" class="list-group-item text-center">
+        <h3>Loading...</h3>
+        <pacman-loader :loading="loading" class="m-auto"></pacman-loader>
+      </div>
       <li v-for="task of tasks" :key="task.id" class="list-group-item">
         {{ task.name }} - {{ task.id }}
         <div class="float-right">
@@ -22,6 +27,10 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import PacmanLoader from "vue-spinner/src/PacmanLoader.vue";
+
+
 export default {
   name: "Home",
   methods: {
@@ -31,7 +40,10 @@ export default {
     this.getTasks();
   },
   computed: {
-    ...mapState(["user", "tasks"])
+    ...mapState(["user", "tasks", "loading"])
+  },
+  components: {
+    PacmanLoader
   }
 };
 </script>

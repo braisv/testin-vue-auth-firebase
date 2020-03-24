@@ -1,10 +1,10 @@
 <template>
   <div id="app" class="container mt-5">
     <div id="nav">
-      <router-link to="/" v-if="loggedUser" class="btn btn-primary">Home</router-link> |
-      <router-link to="/signup" v-if="!loggedUser" class="btn btn-primary">Sign up</router-link> |
-      <router-link to="/login" v-if="!loggedUser" class="btn btn-primary">Log in</router-link> |
-      <a @click="logout" v-if="loggedUser" class="btn btn-danger">Log Out</a>
+      <router-link to="/" v-if="loggedUser" class="btn btn-primary m-2">Home</router-link>
+      <router-link to="/signup" v-if="!loggedUser" class="btn btn-primary m-2">Sign up</router-link>
+      <router-link to="/login" v-if="!loggedUser" class="btn btn-primary m-2">Log in</router-link>
+      <a @click="logout" v-if="loggedUser" class="btn btn-danger m-2">Log Out</a>
     </div>
     <router-view />
   </div>
