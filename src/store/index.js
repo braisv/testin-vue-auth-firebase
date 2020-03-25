@@ -112,12 +112,14 @@ export default new Vuex.Store({
       })
     },
     addTask({ commit }, taskName) {
+      commit('loadFirebase', true)
       const user = firebase.auth().currentUser
       db.collection(user.email).add({
         name: taskName
       })
       .then( () => {
         router.push({ name: 'Home' })
+        commit('loadFirebase', false)
       })
     },
     deleteTask({ commit }, id) {

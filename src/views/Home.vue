@@ -8,7 +8,7 @@
     <ul class="list-group">
       <div v-if="loading" class="list-group-item text-center">
         <h3>Loading...</h3>
-        <pacman-loader :loading="loading" class="m-auto"></pacman-loader>
+        <pacman-loader :loading="loading" class="mx-auto" style="width: 200px;"></pacman-loader>
       </div>
       <li v-for="task of tasks" :key="task.id" class="list-group-item">
         {{ task.name }} - {{ task.id }}
