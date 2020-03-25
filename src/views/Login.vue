@@ -34,7 +34,8 @@
         Submit
       </button>
     </form>
-    {{ error }}
+    <p v-if="error === 'auth/user-not-found'">Incorrect user</p>
+    <p v-if="error === 'auth/wrong-password'">Incorrect password</p>
   </div>
 </template>
 

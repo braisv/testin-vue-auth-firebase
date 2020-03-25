@@ -55,6 +55,7 @@ export default new Vuex.Store({
           })
         })
         .catch(err => {
+          console.log(err)
           commit("setError", err.message);
         });
     },
@@ -67,7 +68,8 @@ export default new Vuex.Store({
           router.push("/");
         })
         .catch(err => {
-          commit("setError", err.message)
+          console.log(err.code)
+          commit("setError", err.code)
         });
     },
     loggedInUser({ commit }, payload) {
