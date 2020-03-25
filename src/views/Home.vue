@@ -5,12 +5,17 @@
       <button class="btn btn-success btn-block mt-2 mb-2">Add</button>
     </router-link>
 
+      <form>
+        <input type="text" class="form-control mb-2" v-model="search" v-on:keyup="searchTasks(search)" placeholder="Search task...">
+      </form>
+
     <ul class="list-group">
       <div v-if="loading" class="list-group-item text-center">
         <h3>Loading...</h3>
         <pacman-loader :loading="loading" class="mx-auto" style="width: 200px;"></pacman-loader>
       </div>
-      <li v-for="task of tasks" :key="task.id" class="list-group-item">
+
+      <li v-for="task of filteredArray" :key="task.id" class="list-group-item">
         {{ task.name }} - {{ task.id }}
         <div class="float-right">
           <router-link :to="{ name: 'Edit', params: { id: task.id } }">
@@ -26,21 +31,27 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import PacmanLoader from "vue-spinner/src/PacmanLoader.vue";
 
 
 export default {
   name: "Home",
+  data() {
+    return {
+      search: ""
+    }
+  },
   methods: {
-    ...mapActions(["getTasks", "deleteTask"])
+    ...mapActions(["getTasks", "deleteTask", "searchTasks"])
   },
   created() {
     this.getTasks();
   },
   computed: {
-    ...mapState(["user", "tasks", "loading"])
+    ...mapState(["user", "tasks", "loading", "filteredTasks"]),
+    ...mapGetters(["filteredArray"])
   },
   components: {
     PacmanLoader

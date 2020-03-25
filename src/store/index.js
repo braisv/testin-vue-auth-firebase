@@ -13,7 +13,8 @@ export default new Vuex.Store({
     error: "",
     tasks: [],
     task: { name: '', id: '' },
-    loading: false
+    loading: false,
+    search: ""
   },
   mutations: {
     setUser(state, payload) {
@@ -36,6 +37,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    searchTasks({ state }, payload) {
+      state.search = payload.toLowerCase();
+    },
     createUser({ commit }, payload) {
       firebase
         .auth()
@@ -133,6 +137,14 @@ export default new Vuex.Store({
   getters: {
     loggedUser(state) {
       return state.user === null || state.user === '' || state.user === undefined ? false : true
+    },
+    filteredArray(state) {
+      let filter = []
+      for (let task of state.tasks) {
+        let name = task.name.toLowerCase()
+        if (name.indexOf(state.search) >= 0) filter.push(task)
+      }
+      return filter;
     }
   }
 });
